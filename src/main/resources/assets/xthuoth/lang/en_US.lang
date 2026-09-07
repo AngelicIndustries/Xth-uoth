@@ -1,4 +1,6 @@
 # Configuration
+immixer_3d_bottles=3D Immixer bottles and holders
+immixer_3d_bottles.tooltip=Use 3D bottles, holders and upper bars instead of flat sprites like a vanilla brewing stand. Client-side only; applies immediately.
 blighter_entity_id.desc=The entity ID for the Blighter
 rift_entity_id.desc=The entity ID for the Rift
 catalyst_entity_id.desc=The entity ID for the Rift Catalyst

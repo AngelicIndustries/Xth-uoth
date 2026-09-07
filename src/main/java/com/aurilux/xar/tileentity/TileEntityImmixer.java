@@ -33,11 +33,16 @@ public class TileEntityImmixer extends TileEntity implements ISidedInventory {
     /** The current emulsifier */
     private ItemStack emulsifer;
 
+    /** Last set of occupied potion slots sent to clients watching this block. */
+    private int filledPotionSlots;
+
     /** Time spent brewing */
     public int mixTime;
 
     @Override
     public void updateEntity() {
+        if (worldObj.isRemote) return;
+
         if (mixTime > 0) {
             --mixTime;
             if (mixTime == 0) {
@@ -52,17 +57,25 @@ public class TileEntityImmixer extends TileEntity implements ISidedInventory {
             emulsifer = getStackInSlot(EMULSIFIER_INDEX);
         }
 
-        /*
-         * //TODO after I have a custom model: do I actually need this or do I just handle this in the model rendering?
-         * //Updates the block. Most likely to update the rendered model depending on how many potions are in the slots
-         * int i = this.getFilledSlots();
-         * if (i != this.filledSlots) {
-         * this.filledSlots = i;
-         * this.worldObj.setBlockMetadataWithNotify(this.xCoord, this.yCoord, this.zCoord, i, 2);
-         * }
-         */
-        // this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        // Six slots need more bits than block metadata can hold. Send the tile's description packet on changes.
+        int potionSlots = getFilledPotionSlots();
+        if (potionSlots != filledPotionSlots) {
+            filledPotionSlots = potionSlots;
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
         super.updateEntity();
+    }
+
+    /** Bit 0 represents potion slot 2, through bit 5 for potion slot 7. */
+    public int getFilledPotionSlots() {
+        int slots = 0;
+        for (int i = POTION_START; i < getSizeInventory(); i++) {
+            ItemStack stack = inventory[i];
+            if (stack != null && stack.stackSize > 0 && stack.getItem() instanceof ItemPotion) {
+                slots |= 1 << (i - POTION_START);
+            }
+        }
+        return slots;
     }
 
     private void mixPotions() {

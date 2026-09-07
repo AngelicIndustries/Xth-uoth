@@ -8,6 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 import com.aurilux.xar.XARModInfo;
+import com.aurilux.xar.Xthuoth;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -21,6 +22,7 @@ public class ConfigHandler {
     public static int CATALYST_ENTITY_ID;
     public static int DIM_ID;
     public static int ABERRANT_BIOME_ID;
+    public static boolean IMMIXER_3D_BOTTLES = false;
 
     public static Configuration config;
 
@@ -47,16 +49,29 @@ public class ConfigHandler {
         category = "misc";
         RADIANT_ENCH_ID = loadIntProp(category, "radiant_enchant_id", 15);
 
+        // CLIENT
+        IMMIXER_3D_BOTTLES = config.get(
+            "client",
+            "immixer_3d_bottles",
+            false,
+            "Render Immixer bottles, holders and upper bars in 3D. Disabled uses flat sprites like a vanilla brewing stand. Client-side only; applies immediately.")
+            .setLanguageKey("immixer_3d_bottles")
+            .getBoolean(false);
+
         if (config.hasChanged()) {
             config.save();
         }
     }
 
     @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent event) {
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.modID.equalsIgnoreCase(XARModInfo.MOD_ID)) {
             // resync configs
+            boolean previousBottles3D = IMMIXER_3D_BOTTLES;
             loadConfig();
+            if (previousBottles3D != IMMIXER_3D_BOTTLES) {
+                Xthuoth.proxy.refreshBlockRenderers();
+            }
         }
     }
 
