@@ -1,5 +1,7 @@
 # Xth'uoth Revived
 
+![Xth'uoth Revived](images/logo_small.png)
+
 A revival of [Aurilux's Xth'uoth](https://github.com/Aurilux/Xth-uoth), a Thaumcraft addon for **Minecraft 1.7.10** with a Lovecraftian dimension, new research, and potion mixing. Install on both client and server.
 
 [![GitHub](images/badges/github.png)](https://github.com/JackOfNoneTrades/Xth-uoth/releases)
