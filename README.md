@@ -4,6 +4,9 @@
 
 A revival of [Aurilux's Xth'uoth](https://github.com/Aurilux/Xth-uoth), a Thaumcraft addon for **Minecraft 1.7.10** with a Lovecraftian dimension, new research, and potion mixing. Install on both client and server.
 
+> [!WARNING]
+> The mod was left in a very WIP state. Its custom dimension is quite barren.
+
 [![GitHub](images/badges/github.png)](https://github.com/JackOfNoneTrades/Xth-uoth/releases)
 [![67minecraft](images/badges/67.png)](https://67.fentanylsolutions.org/mod/xth-uoth)
 [![Maven](images/badges/maven.png)](https://maven.fentanylsolutions.org/#/releases/com/aurilux/xar/Xth-uoth)
