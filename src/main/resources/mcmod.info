@@ -1,21 +1,25 @@
-{
-  "modListVersion": 2,
-  "modList": [{
-	"modid": "Xthuoth",
-	"name": "Xth'uoth: the Aberrant Realm",
-	"description": "Explore some of the hidden mysteries behind the origins of taint, warp, and flux by delving into a terrifying dimension inspired by the Lovecraftian mythos and the Far Realms of D&D. Prepare yourself with new armor, weapons, enchantments, research and more!",
-	"version": "${mod_version}",
-	"mcversion": "${minecraft_version}",
-	"url": "",
-	"updateUrl": "",
-	"authorList": [ "Aurilux" ],
-	"credits": "Azanor; Art by Glowstone Ghost",
+[
+  {
+    "modid": "${modId}",
+    "name": "${modName}",
+    "description": "A revival of Aurilux's Thaumcraft addon for Minecraft 1.7.10, with a Lovecraftian dimension, new research, and potion mixing.",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "url": "https://github.com/JackOfNoneTrades/Xth-uoth",
+    "updateUrl": "",
+    "authorList": [
+      "Aurilux"
+    ],
+    "credits": "Aurilux: original mod; Glowstone Ghost: artwork; Azanor: Thaumcraft; jack: revival and maintenance.",
     "logoFile": "",
     "screenshots": [],
     "parent": "",
-    "requiredMods": [ "Forge", "ArdentCore", "Thaumcraft" ],
-    "dependencies": [ "ArdentCore", "Thaumcraft" ],
-    "dependants": [],
+    "dependencies": [
+      "Thaumcraft"
+    ],
+    "requiredMods": [
+      "Thaumcraft@[4.2.3.5,)"
+    ],
     "useDependencyInformation": true
-  }]
-}
+  }
+]
