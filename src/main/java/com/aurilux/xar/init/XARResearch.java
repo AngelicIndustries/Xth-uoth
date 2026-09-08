@@ -52,7 +52,9 @@ public class XARResearch {
         new XARResearchItem(
             "mixingPotions",
             CATEGORY,
-            new AspectList(),
+            new AspectList().add(Aspect.WATER, 3)
+                .add(Aspect.MAGIC, 3)
+                .add(Aspect.EXCHANGE, 3),
             1,
             -2,
             3,
