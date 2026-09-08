@@ -22,6 +22,7 @@ public class ConfigHandler {
     public static int CATALYST_ENTITY_ID;
     public static int DIM_ID;
     public static int ABERRANT_BIOME_ID;
+    public static boolean GENERATE_PRYSMAL_ORE = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
 
     public static Configuration config;
@@ -44,6 +45,14 @@ public class ConfigHandler {
         category = "worldgen";
         ABERRANT_BIOME_ID = loadIntPropClamped(category, "aberrant_biome_id", 40, 40, 255);
         DIM_ID = loadIntProp(category, "xthuoth_dim_id", DimensionManager.getNextFreeDimId());
+        GENERATE_PRYSMAL_ORE = config.get(
+            category,
+            "generate_prysmal_ore",
+            true,
+            "Generate Prysmal ore in new Overworld chunks. Existing ore is not removed. Uses the server's setting in multiplayer.")
+            .setLanguageKey("generate_prysmal_ore")
+            .setRequiresWorldRestart(true)
+            .getBoolean(true);
 
         // MISC
         category = "misc";
