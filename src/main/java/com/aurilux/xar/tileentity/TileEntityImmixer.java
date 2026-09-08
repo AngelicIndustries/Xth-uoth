@@ -107,7 +107,7 @@ public class TileEntityImmixer extends TileEntity implements ISidedInventory {
 
         potionEffects.setTag("CustomPotionEffects", taglist);
         resultPotion.setTagCompound(potionEffects);
-        setInventorySlotContents(EMULSIFIER_INDEX, decrStackSize(EMULSIFIER_INDEX, 1));
+        decrStackSize(EMULSIFIER_INDEX, 1);
         setInventorySlotContents(RESULT_INDEX, resultPotion);
     }
 
@@ -184,22 +184,22 @@ public class TileEntityImmixer extends TileEntity implements ISidedInventory {
      * 
      * @param index  the index of the slot
      * @param amount the amount to decrease the stack by
-     * @return the resulting itemstack
+     * @return the removed items, or null if the slot is empty
      */
     @Override
     public ItemStack decrStackSize(int index, int amount) {
         ItemStack itemStack = getStackInSlot(index);
-        if (itemStack != null) {
-            if (itemStack.stackSize <= amount) {
-                setInventorySlotContents(index, null);
-            } else {
-                ItemStack splitStack = itemStack.splitStack(amount);
-                if (splitStack.stackSize == 0) {
-                    setInventorySlotContents(index, null);
-                }
-            }
+        if (itemStack == null) return null;
+
+        ItemStack removed;
+        if (itemStack.stackSize <= amount) {
+            removed = itemStack;
+            setInventorySlotContents(index, null);
+        } else {
+            removed = itemStack.splitStack(amount);
         }
-        return itemStack;
+        markDirty();
+        return removed;
     }
 
     @Override
