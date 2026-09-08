@@ -74,8 +74,9 @@ public class Xthuoth {
         // server-specific(?) objects
         proxy.init();
 
-        // We don't want any Thaumcraft generation to be in Xth'uoth
+        // Exclude foreign generation through the mods' supported dimension blacklist hooks.
         FMLInterModComms.sendMessage("Thaumcraft", "dimensionBlacklist", ConfigHandler.DIM_ID + ":0");
+        FMLInterModComms.sendMessage("arsmagica2", "dwg", Integer.toString(ConfigHandler.DIM_ID));
     }
 
     @EventHandler

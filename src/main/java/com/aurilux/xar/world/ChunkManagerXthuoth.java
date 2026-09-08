@@ -18,8 +18,9 @@ public class ChunkManagerXthuoth extends WorldChunkManager {
         this.biomeGenerator = biome;
         this.temperature = temp;
         this.rainfall = rain;
-        allowedBiomes.clear();
-        allowedBiomes.add(biome);
+        // Restrict this manager's spawn biomes without changing the shared Overworld defaults.
+        getBiomesToSpawnIn().clear();
+        getBiomesToSpawnIn().add(biome);
     }
 
     /**
