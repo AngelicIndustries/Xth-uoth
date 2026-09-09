@@ -25,6 +25,7 @@ public class ConfigHandler {
     public static int LIFESIGHT_POTION_ID;
     public static int POISON_IMMUNITY_POTION_ID;
     public static boolean GENERATE_PRYSMAL_ORE = true;
+    public static int PRYSMAL_ORE_HARVEST_LEVEL = 2;
     public static volatile boolean RIFT_TAINT_SPREAD = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
 
@@ -64,6 +65,18 @@ public class ConfigHandler {
         // MISC
         category = "misc";
         RADIANT_ENCH_ID = loadIntProp(category, "radiant_enchant_id", 15);
+        PRYSMAL_ORE_HARVEST_LEVEL = Math.max(
+            0,
+            config.get(
+                category,
+                "prysmal_ore_harvest_level",
+                2,
+                "Pickaxe harvest level required for Prysmal ore: 0 = wood/gold, 1 = stone, 2 = iron, 3 = diamond. Higher levels may be provided by other mods. Use the same setting on the server and clients. Requires a game restart.",
+                0,
+                Integer.MAX_VALUE)
+                .setLanguageKey("prysmal_ore_harvest_level")
+                .setRequiresMcRestart(true)
+                .getInt(2));
         RIFT_TAINT_SPREAD = config.get(
             category,
             "rift_taint_spread",

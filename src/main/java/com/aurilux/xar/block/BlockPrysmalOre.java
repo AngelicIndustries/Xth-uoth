@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 
+import com.aurilux.xar.handler.ConfigHandler;
 import com.aurilux.xar.init.XARItems;
 import com.aurilux.xar.util.ResourceUtils;
 
@@ -17,6 +18,7 @@ public class BlockPrysmalOre extends Block {
 
     public BlockPrysmalOre() {
         super(Material.rock);
+        setHarvestLevel("pickaxe", ConfigHandler.PRYSMAL_ORE_HARVEST_LEVEL);
     }
 
     @Override

@@ -1,4 +1,6 @@
 # Configuration
+prysmal_ore_harvest_level=Prysmal ore harvest level
+prysmal_ore_harvest_level.tooltip=Required pickaxe level: 0 = wood/gold, 1 = stone, 2 = iron, 3 = diamond. Higher levels may be provided by other mods. Use the same setting on the server and clients. Requires a game restart.
 lifesight_potion_id=Lifesight effect ID
 lifesight_potion_id.tooltip=Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Changing IDs requires a game restart.
 poison_immunity_potion_id=Poison Immunity effect ID
