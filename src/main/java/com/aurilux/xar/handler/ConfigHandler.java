@@ -23,6 +23,7 @@ public class ConfigHandler {
     public static int DIM_ID;
     public static int ABERRANT_BIOME_ID;
     public static boolean GENERATE_PRYSMAL_ORE = true;
+    public static volatile boolean RIFT_TAINT_SPREAD = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
 
     public static Configuration config;
@@ -57,6 +58,13 @@ public class ConfigHandler {
         // MISC
         category = "misc";
         RADIANT_ENCH_ID = loadIntProp(category, "radiant_enchant_id", 15);
+        RIFT_TAINT_SPREAD = config.get(
+            category,
+            "rift_taint_spread",
+            true,
+            "Allow rifts to spread tainted biomes and fibrous taint in the Overworld. Does not remove existing taint or affect other Thaumcraft spreading sources. Uses the server's setting in multiplayer; applies immediately.")
+            .setLanguageKey("rift_taint_spread")
+            .getBoolean(true);
 
         // CLIENT
         IMMIXER_3D_BOTTLES = config.get(

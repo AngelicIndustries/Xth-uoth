@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
+import com.aurilux.xar.handler.ConfigHandler;
 import com.aurilux.xar.handler.RiftTravelHandler;
 import com.aurilux.xar.init.XARWorldgen;
 
@@ -79,7 +80,7 @@ public class EntityRift extends Entity {
     public void onEntityUpdate() {
         // Spread taint just like tainted nodes, but twice as fast
         tickCounter++;
-        if (!worldObj.isRemote && this.dimension == 0 && tickCounter % 25 == 0) {
+        if (!worldObj.isRemote && ConfigHandler.RIFT_TAINT_SPREAD && this.dimension == 0 && tickCounter % 25 == 0) {
             int y = 0;
             int x = MathHelper.floor_double(this.posX - .5D) + worldObj.rand.nextInt(8) - worldObj.rand.nextInt(8);
             int z = MathHelper.floor_double(this.posZ) + worldObj.rand.nextInt(8) - worldObj.rand.nextInt(8);
