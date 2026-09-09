@@ -9,17 +9,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
-import com.aurilux.xar.handler.ConfigHandler;
+import com.aurilux.xar.handler.RiftTravelHandler;
 import com.aurilux.xar.init.XARWorldgen;
-import com.aurilux.xar.world.TeleporterXthuoth;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -61,22 +57,21 @@ public class EntityRift extends Entity {
 
     @Override
     public void onCollideWithPlayer(EntityPlayer player) {
-        if (player.ridingEntity == null && player.riddenByEntity == null && player.timeUntilPortal == 0) {
-            if (player instanceof EntityPlayerMP) { // && !this.worldObj.isRemote) {
-                // 200 tick duration is ten seconds. There are 20 ticks a second
-                PotionEffect effect = new PotionEffect(Potion.confusion.id, 200);
-                player.addPotionEffect(effect);
+        if (player.worldObj != worldObj || player.ridingEntity != null
+            || player.riddenByEntity != null
+            || !boundingBox.intersectsWith(player.boundingBox)) return;
 
-                EntityPlayerMP mpPlayer = (EntityPlayerMP) player;
-                mpPlayer.timeUntilPortal = 200;
-                int targetDimension = 0; // 0 = Overworld dimension ID
-                if (mpPlayer.dimension != ConfigHandler.DIM_ID) {
-                    targetDimension = ConfigHandler.DIM_ID;
-                }
-                Teleporter tele = new TeleporterXthuoth(mpPlayer.mcServer.worldServerForDimension(targetDimension));
-                mpPlayer.mcServer.getConfigurationManager()
-                    .transferPlayerToDimension(mpPlayer, targetDimension, tele);
-            }
+        if (player.timeUntilPortal > 0) {
+            // The cooldown must only expire after the player leaves the destination rift.
+            player.timeUntilPortal = player.getPortalCooldown();
+            return;
+        }
+
+        if (worldObj.isRemote) {
+            // Use vanilla's portal distortion without sending the server to the Nether.
+            player.setInPortal();
+        } else if (player instanceof EntityPlayerMP) {
+            RiftTravelHandler.touchRift((EntityPlayerMP) player);
         }
     }
 
@@ -84,7 +79,7 @@ public class EntityRift extends Entity {
     public void onEntityUpdate() {
         // Spread taint just like tainted nodes, but twice as fast
         tickCounter++;
-        if (this.dimension == 0 && tickCounter % 25 == 0) {
+        if (!worldObj.isRemote && this.dimension == 0 && tickCounter % 25 == 0) {
             int y = 0;
             int x = MathHelper.floor_double(this.posX - .5D) + worldObj.rand.nextInt(8) - worldObj.rand.nextInt(8);
             int z = MathHelper.floor_double(this.posZ) + worldObj.rand.nextInt(8) - worldObj.rand.nextInt(8);
