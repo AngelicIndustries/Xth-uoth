@@ -1,10 +1,12 @@
 package com.aurilux.xar.init;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 
+import com.aurilux.xar.handler.ConfigHandler;
 import com.aurilux.xar.potion.PotionLifesight;
 import com.aurilux.xar.potion.PotionPoisonImmunity;
 import com.aurilux.xar.util.ReflectionUtils;
@@ -49,40 +51,78 @@ public class XARPotions {
      * 'potionAmplifiers' ArrayList.
      */
 
-    private static final int NUM_NEW_POTIONS = 2;
-    private static int potionOffset;
-
     public static final String wightbulbPodEffect = "+0+1-2+3&4-4+13";
     public static final String thanabloomEffect = "+0+1+2+3&4-4+13";
 
-    public static int nextPotionID = 0;
     public static Potion lifesight;
     public static Potion poisonImmunity;
 
     @SuppressWarnings("unchecked")
     public static void init() {
-        potionOffset = Potion.potionTypes.length;
+        int lifesightId = ConfigHandler.LIFESIGHT_POTION_ID;
+        int poisonImmunityId = ConfigHandler.POISON_IMMUNITY_POTION_ID;
+        validatePotionId(lifesightId, "lifesight_potion_id");
+        validatePotionId(poisonImmunityId, "poison_immunity_potion_id");
+        if (lifesightId != -1 && lifesightId == poisonImmunityId) {
+            throw new IllegalArgumentException(
+                "Lifesight and Poison Immunity must have different potion IDs in Xthuoth.cfg.");
+        }
+        lifesightId = resolvePotionId(lifesightId, poisonImmunityId);
+        poisonImmunityId = resolvePotionId(poisonImmunityId, lifesightId);
 
-        // Increase the size of the Potion.potionTypes array to have enough to to hold our potion additions by creating
-        // a
-        // new array with the appropriate size, copying the original contents, and then use reflection to set the
-        // original array to our new array
-        Potion[] potionTypes = new Potion[potionOffset + NUM_NEW_POTIONS];
-        System.arraycopy(Potion.potionTypes, 0, potionTypes, 0, potionOffset);
-        ReflectionUtils.setProtectedValue(Potion.class, null, potionTypes, "potionTypes", "field_76425_a");
+        int requiredSize = Math.max(lifesightId, poisonImmunityId) + 1;
+        if (Potion.potionTypes.length < requiredSize) {
+            Potion[] potionTypes = Arrays.copyOf(Potion.potionTypes, requiredSize);
+            ReflectionUtils.setProtectedValue(Potion.class, null, potionTypes, "potionTypes", "field_76425_a");
+            if (Potion.potionTypes != potionTypes) {
+                throw new IllegalStateException("Unable to expand the potion registry for Xth'uoth.");
+            }
+        }
 
         // Initialize our potions
         // NOTE: If you don't have an item that is set as a potion's ingredient (with the 'setPotionEffect' method),
         // your potion will not show up in the potion list
-        lifesight = new PotionLifesight(potionOffset + nextPotionID++, false, 16767262)
-            .setPotionName("potion.lifesight");
-        poisonImmunity = new PotionPoisonImmunity(potionOffset + nextPotionID++, false, 1280)
-            .setPotionName("potion.poisonImmunity");
+        lifesight = new PotionLifesight(lifesightId, false, 16767262).setPotionName("potion.lifesight");
+        poisonImmunity = new PotionPoisonImmunity(poisonImmunityId, false, 1280).setPotionName("potion.poisonImmunity");
 
         // Add our potion requirements: the bit combo that Minecraft will recognize as our potion
         HashMap myPotionRequirements = ReflectionUtils
             .getProtectedValue(PotionHelper.class, "potionRequirements", "field_77927_l");
         myPotionRequirements.put(lifesight.getId(), "0 & 1 & 2 & 3");
         myPotionRequirements.put(poisonImmunity.getId(), "0 & 1 & !2 & 3");
+        ConfigHandler.savePotionIds(lifesightId, poisonImmunityId);
+    }
+
+    private static void validatePotionId(int id, String setting) {
+        if (id == -1) return;
+        // Vanilla saves and synchronizes potion IDs as signed bytes.
+        if (id < 1 || id > 127) {
+            throw new IllegalArgumentException(
+                "Invalid potions." + setting
+                    + "="
+                    + id
+                    + " in Xthuoth.cfg. Use -1 for automatic allocation or an unused ID from 1 to 127.");
+        }
+        if (id < Potion.potionTypes.length && Potion.potionTypes[id] != null) {
+            throw new IllegalArgumentException(
+                "Potion ID " + id
+                    + " is already used by "
+                    + Potion.potionTypes[id].getName()
+                    + ". Choose an unused potions."
+                    + setting
+                    + " in Xthuoth.cfg.");
+        }
+    }
+
+    private static int resolvePotionId(int configured, int reserved) {
+        if (configured != -1) return configured;
+        // Prefer the original mod's usual 32/33 slots, but never append beyond vanilla's saved ID range.
+        for (int id = 32; id <= 127; id++) {
+            if (id != reserved && (id >= Potion.potionTypes.length || Potion.potionTypes[id] == null)) return id;
+        }
+        for (int id = 1; id < 32; id++) {
+            if (id != reserved && Potion.potionTypes[id] == null) return id;
+        }
+        throw new IllegalStateException("No unused potion IDs from 1 to 127 remain for Xth'uoth.");
     }
 }

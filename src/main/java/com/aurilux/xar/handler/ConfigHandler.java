@@ -22,6 +22,8 @@ public class ConfigHandler {
     public static int CATALYST_ENTITY_ID;
     public static int DIM_ID;
     public static int ABERRANT_BIOME_ID;
+    public static int LIFESIGHT_POTION_ID;
+    public static int POISON_IMMUNITY_POTION_ID;
     public static boolean GENERATE_PRYSMAL_ORE = true;
     public static volatile boolean RIFT_TAINT_SPREAD = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
@@ -54,6 +56,10 @@ public class ConfigHandler {
             .setLanguageKey("generate_prysmal_ore")
             .setRequiresWorldRestart(true)
             .getBoolean(true);
+
+        // POTIONS
+        LIFESIGHT_POTION_ID = loadPotionId("lifesight_potion_id", "Lifesight");
+        POISON_IMMUNITY_POTION_ID = loadPotionId("poison_immunity_potion_id", "Poison Immunity");
 
         // MISC
         category = "misc";
@@ -93,6 +99,29 @@ public class ConfigHandler {
     }
 
     //// HELPERS
+    private static int loadPotionId(String identifier, String name) {
+        return config.get(
+            "potions",
+            identifier,
+            -1,
+            name + " effect ID. Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Requires a game restart.",
+            -1,
+            127)
+            .setLanguageKey(identifier)
+            .setRequiresMcRestart(true)
+            .getInt(-1);
+    }
+
+    public static void savePotionIds(int lifesightId, int poisonImmunityId) {
+        LIFESIGHT_POTION_ID = lifesightId;
+        POISON_IMMUNITY_POTION_ID = poisonImmunityId;
+        config.get("potions", "lifesight_potion_id", -1)
+            .set(lifesightId);
+        config.get("potions", "poison_immunity_potion_id", -1)
+            .set(poisonImmunityId);
+        if (config.hasChanged()) config.save();
+    }
+
     private static int loadIntProp(String category, String identifier, int defaultValue) {
         Property prop = config
             .get(category, identifier, defaultValue, StatCollector.translateToLocal(identifier + ".desc"));

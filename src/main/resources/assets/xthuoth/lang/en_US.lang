@@ -1,4 +1,8 @@
 # Configuration
+lifesight_potion_id=Lifesight effect ID
+lifesight_potion_id.tooltip=Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Changing IDs requires a game restart.
+poison_immunity_potion_id=Poison Immunity effect ID
+poison_immunity_potion_id.tooltip=Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Changing IDs requires a game restart.
 immixer_3d_bottles=3D Immixer bottles and holders
 immixer_3d_bottles.tooltip=Use 3D bottles, holders and upper bars instead of flat sprites like a vanilla brewing stand. Client-side only; applies immediately.
 generate_prysmal_ore=Generate Prysmal ore
@@ -78,7 +82,6 @@ tc.research_category.XTHUOTH=Xth'uoth
 xarresearch.name.xthpotions=Potions
 xarresearch.lore.xthpotions=Nifty concoctions
 xarresearch.page.xthpotions.0=You can find some pretty rare ingredients in Xth'uoth to make some new potions. You hope to discover more soon.<BR><BR>§l      §nPoison Immunity§r<BR> Whether it be from annoying swarms of cave spiders or sinister witches, being poisoned has been the death of many adventurers. Fortunately, Xth'uoth provides you with a way to limit your death count a bit. By combining a wightbulb pod with an awkward potion you can create a brew that will make you immune to all poison for its duration.
-xarresearch.page.xthpotions.1=§l         §nLifesight§r<BR>Mixing a thanabloom heart with an awkward potions creates a brew that bestows its life-detecing ability upon the imbiber. For the duration of this potion any mob you cannot see directly (such as on the other side of a wall) will be highlighted with a particle effect.
 
 xarresearch.name.mixingPotions=Combining Potions
 xarresearch.lore.mixingPotions=All the Buffs!

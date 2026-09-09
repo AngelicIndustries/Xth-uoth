@@ -47,7 +47,7 @@ public class XARResearch {
             .setAutoUnlock()
             .setRound()
             .registerResearchItem()
-            .setPages(new ResearchPage("0")); // , new ResearchPage("1"));
+            .setPages(new ResearchPage("0"));
 
         new XARResearchItem(
             "mixingPotions",

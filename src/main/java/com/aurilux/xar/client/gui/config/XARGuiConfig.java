@@ -28,6 +28,7 @@ public class XARGuiConfig extends GuiConfig {
         List<IConfigElement> elements = new ArrayList();
         elements.addAll(new ConfigElement(ConfigHandler.config.getCategory("client")).getChildElements());
         elements.addAll(new ConfigElement(ConfigHandler.config.getCategory("worldgen")).getChildElements());
+        elements.addAll(new ConfigElement(ConfigHandler.config.getCategory("potions")).getChildElements());
         elements.addAll(new ConfigElement(ConfigHandler.config.getCategory("entities")).getChildElements());
         elements.addAll(new ConfigElement(ConfigHandler.config.getCategory("misc")).getChildElements());
         return elements;
