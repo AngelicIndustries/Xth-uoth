@@ -15,10 +15,12 @@
     "screenshots": [],
     "parent": "",
     "dependencies": [
-      "Thaumcraft"
+      "Thaumcraft",
+      "unimixins"
     ],
     "requiredMods": [
-      "Thaumcraft@[4.2.3.5,)"
+      "Thaumcraft@[4.2.3.5,)",
+      "unimixins"
     ],
     "useDependencyInformation": true
   }

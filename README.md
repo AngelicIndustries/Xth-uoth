@@ -19,6 +19,7 @@ A revival of [Aurilux's Xth'uoth](https://github.com/Aurilux/Xth-uoth), a Thaumc
 
 ## Dependencies
 
+* [UniMixins](https://github.com/LegacyModdingMC/UniMixins/releases) [![CurseForge](images/icons/curse.png)](https://www.curseforge.com/minecraft/mc-mods/unimixins)
 * [Thaumcraft 4.2.3.5](https://www.curseforge.com/minecraft/mc-mods/thaumcraft) [![CurseForge](images/icons/curse.png)](https://www.curseforge.com/minecraft/mc-mods/thaumcraft)
 
 ## Building

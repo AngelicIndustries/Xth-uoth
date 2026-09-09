@@ -1,6 +1,9 @@
 package com.aurilux.xar.handler;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.DimensionManager;
@@ -26,6 +29,7 @@ public class ConfigHandler {
     public static int POISON_IMMUNITY_POTION_ID;
     public static boolean GENERATE_PRYSMAL_ORE = true;
     public static int PRYSMAL_ORE_HARVEST_LEVEL = 2;
+    public static volatile Set<String> ADDITIONAL_ABERRATIONS = Collections.emptySet();
     public static volatile boolean RIFT_TAINT_SPREAD = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
 
@@ -44,6 +48,18 @@ public class ConfigHandler {
         BLIGHTER_ENTITY_ID = loadIntProp(category, "blighter_entity_id", 101);
         RIFT_ENTITY_ID = loadIntProp(category, "rift_entity_id", 102);
         CATALYST_ENTITY_ID = loadIntProp(category, "catalyst_entity_id", 103);
+        Set<String> aberrations = new HashSet<>();
+        for (String id : config.get(
+            category,
+            "additional_aberrations",
+            new String[0],
+            "Additional mobs that take Radiant's bonus damage. Enter exact, case-sensitive entity IDs as used by /summon, one per line, e.g. Zombie or Thaumcraft.Wisp. Blighters always qualify. Does not change spawning or existing creature types. Applies immediately; use the same list on the server and clients.")
+            .setLanguageKey("additional_aberrations")
+            .getStringList()) {
+            if (!id.trim()
+                .isEmpty()) aberrations.add(id.trim());
+        }
+        ADDITIONAL_ABERRATIONS = Collections.unmodifiableSet(aberrations);
 
         // WORLDGEN
         category = "worldgen";
