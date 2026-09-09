@@ -31,6 +31,7 @@ public class ConfigHandler {
     public static int PRYSMAL_ORE_HARVEST_LEVEL = 2;
     public static volatile Set<String> ADDITIONAL_ABERRATIONS = Collections.emptySet();
     public static volatile boolean RIFT_TAINT_SPREAD = true;
+    public static volatile boolean RIFT_MOB_SPAWNING = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
 
     public static Configuration config;
@@ -99,6 +100,13 @@ public class ConfigHandler {
             true,
             "Allow rifts to spread tainted biomes and fibrous taint in the Overworld. Does not remove existing taint or affect other Thaumcraft spreading sources. Uses the server's setting in multiplayer; applies immediately.")
             .setLanguageKey("rift_taint_spread")
+            .getBoolean(true);
+        RIFT_MOB_SPAWNING = config.get(
+            category,
+            "rift_mob_spawning",
+            true,
+            "Allow rifts to spawn mobs from the Aberrant biome's monster list. Does not affect portal travel, taint spreading, natural mob spawning, or existing mobs. Uses the server's setting in multiplayer; applies immediately.")
+            .setLanguageKey("rift_mob_spawning")
             .getBoolean(true);
 
         // CLIENT

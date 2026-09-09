@@ -41,7 +41,7 @@ public class XAREntities {
         // registering the mob egg
         EntityRegistry.registerGlobalEntityID(cl, name, entityId, primaryColor, secondaryColor);
 
-        addEntity(cl, name, trackingRange, entityId, updateFrequency, sendsVelocityUpdates);
+        addEntity(cl, name, entityId, trackingRange, updateFrequency, sendsVelocityUpdates);
     }
     //// END HELPERS
 }

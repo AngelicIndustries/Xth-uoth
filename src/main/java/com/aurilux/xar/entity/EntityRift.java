@@ -4,21 +4,21 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
+import com.aurilux.xar.Xthuoth;
 import com.aurilux.xar.handler.ConfigHandler;
 import com.aurilux.xar.handler.RiftTravelHandler;
 import com.aurilux.xar.init.XARWorldgen;
 
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import thaumcraft.common.blocks.BlockTaintFibres;
@@ -99,29 +99,38 @@ public class EntityRift extends Entity {
         // Spawn a random aberration
         int spawnChance = 4000; // nether portals spawn chance is 2000, though entities seem to update more often than
                                 // blocks
-        if (!worldObj.isRemote && worldObj.provider.isSurfaceWorld()
+        if (!worldObj.isRemote && ConfigHandler.RIFT_MOB_SPAWNING
+            && worldObj.provider.isSurfaceWorld()
             && worldObj.getGameRules()
                 .getGameRuleBooleanValue("doMobSpawning")
             && worldObj.rand.nextInt(spawnChance) < worldObj.difficultySetting.getDifficultyId()) {
             // Get the list of aberrations
-            List aberrations = XARWorldgen.aberrantBiome.getSpawnableList(EnumCreatureType.monster);
-            // Then get a random entity class from that list
-            Class entityClass = ((SpawnListEntry) aberrations.get(rand.nextInt(aberrations.size()))).entityClass;
-            // Finally get the entity's id to be spawned
-            // TODO change getTrackingRange to getModEntityId when the issue is fixed
-            int entityId = EntityRegistry.instance()
-                .lookupModSpawn(entityClass, false)
-                .getTrackingRange();
+            List<SpawnListEntry> aberrations = XARWorldgen.aberrantBiome.getSpawnableList(EnumCreatureType.monster);
+            if (aberrations.isEmpty()) return;
+            Class<? extends EntityLiving> entityClass = aberrations.get(rand.nextInt(aberrations.size())).entityClass;
 
             Block blockBelow = worldObj.getBlock(
                 MathHelper.floor_double(this.posX - .5D),
                 MathHelper.floor_double(this.posY) - 1,
                 MathHelper.floor_double(this.posZ));
             if (posY > 0 && blockBelow.isNormalCube()) {
-                Entity entity = ItemMonsterPlacer
-                    .spawnCreature(worldObj, entityId, posX + 0.5D, posY + .5D, posZ + 0.5D);
-                if (entity != null) {
+                // Spawn the selected class: tracking distances and mod-local IDs are not global spawn-egg IDs.
+                try {
+                    EntityLiving entity = entityClass.getConstructor(World.class)
+                        .newInstance(worldObj);
+                    entity.setLocationAndAngles(
+                        posX + 0.5D,
+                        posY + .5D,
+                        posZ + 0.5D,
+                        MathHelper.wrapAngleTo180_float(worldObj.rand.nextFloat() * 360.0F),
+                        0.0F);
+                    entity.rotationYawHead = entity.rotationYaw;
+                    entity.renderYawOffset = entity.rotationYaw;
+                    entity.onSpawnWithEgg(null);
                     entity.timeUntilPortal = entity.getPortalCooldown();
+                    if (worldObj.spawnEntityInWorld(entity)) entity.playLivingSound();
+                } catch (ReflectiveOperationException e) {
+                    Xthuoth.log.warn("Unable to spawn rift mob " + entityClass.getName(), e);
                 }
             }
         }

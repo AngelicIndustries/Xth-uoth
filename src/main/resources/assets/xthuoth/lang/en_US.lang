@@ -1,4 +1,6 @@
 # Configuration
+rift_mob_spawning=Rift mob spawning
+rift_mob_spawning.tooltip=Allow rifts to spawn mobs from the Aberrant biome's monster list. Does not affect portal travel, taint spreading, natural mob spawning, or existing mobs. Server-side setting; applies immediately.
 additional_aberrations=Additional aberrations
 additional_aberrations.tooltip=Entity IDs that take Radiant's bonus damage, e.g. Zombie or Thaumcraft.Wisp. IDs are case-sensitive; use one per entry. Blighters always qualify. Applies immediately; use the same list on the server and clients.
 prysmal_ore_harvest_level=Prysmal ore harvest level
