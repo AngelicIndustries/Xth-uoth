@@ -1,15 +1,22 @@
 package com.aurilux.xar.init;
 
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
 import com.aurilux.xar.XARModInfo;
 import com.aurilux.xar.enchantment.EnchantmentRadiant;
 import com.aurilux.xar.handler.ConfigHandler;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class XARMisc {
 
@@ -22,6 +29,14 @@ public class XARMisc {
         @Override
         public Item getTabIconItem() {
             return XARItems.riftCatalyst;
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void displayAllReleventItems(List<ItemStack> items) {
+            super.displayAllReleventItems(items);
+            // The registered vanilla egg normally appears only in the miscellaneous tab.
+            items.add(new ItemStack(Items.spawn_egg, 1, ConfigHandler.BLIGHTER_ENTITY_ID));
         }
     };
 
