@@ -1,0 +1,15 @@
+Aberrant Slime incorporates material from RidiculousWorld by SpitefulFox and contributors.
+Source: https://github.com/SpitefulFox/RidiculousWorld
+Revision: 671e19fcbe33ceffe0c88f378f9c1161d482a731
+License: WTFPL version 2; see RidiculousWorld-WTFPL.txt in this directory.
+
+Adapted upstream files:
+- src/main/java/fox/spiteful/ridiculous/entities/EntityShoggoth.java
+- src/main/resources/assets/ridiculous/textures/models/shoggoth.png
+- src/main/resources/assets/ridiculous/shaders/shoggoth.vert
+- src/main/resources/assets/ridiculous/shaders/shoggoth.frag
+
+The mob is renamed and restricted to natural spawning in Xth'uoth, and uses the
+native aberration creature attribute. Its renderer uses Minecraft's slime models,
+as does the upstream renderer. The shader loader is implemented for Xth'uoth;
+RidiculousWorld's separately licensed ShaderHelper is not included.

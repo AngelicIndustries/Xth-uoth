@@ -21,6 +21,7 @@ public class ConfigHandler {
     // config settings
     public static int RADIANT_ENCH_ID;
     public static int BLIGHTER_ENTITY_ID;
+    public static int ABERRANT_SLIME_ENTITY_ID;
     public static int RIFT_ENTITY_ID;
     public static int CATALYST_ENTITY_ID;
     public static int DIM_ID;
@@ -33,6 +34,7 @@ public class ConfigHandler {
     public static volatile boolean RIFT_TAINT_SPREAD = true;
     public static volatile boolean RIFT_MOB_SPAWNING = true;
     public static boolean IMMIXER_3D_BOTTLES = false;
+    public static boolean ABERRANT_SLIME_SHADERS = true;
 
     public static Configuration config;
 
@@ -49,6 +51,7 @@ public class ConfigHandler {
         BLIGHTER_ENTITY_ID = loadIntProp(category, "blighter_entity_id", 101);
         RIFT_ENTITY_ID = loadIntProp(category, "rift_entity_id", 102);
         CATALYST_ENTITY_ID = loadIntProp(category, "catalyst_entity_id", 103);
+        ABERRANT_SLIME_ENTITY_ID = loadIntProp(category, "aberrant_slime_entity_id", 104);
         Set<String> aberrations = new HashSet<>();
         for (String id : config.get(
             category,
@@ -110,6 +113,13 @@ public class ConfigHandler {
             .getBoolean(true);
 
         // CLIENT
+        ABERRANT_SLIME_SHADERS = config.get(
+            "client",
+            "aberrant_slime_shaders",
+            true,
+            "Animate Aberrant Slimes with distortion and grain effects. Disable to use only the slime texture. Client-side only; applies immediately.")
+            .setLanguageKey("aberrant_slime_shaders")
+            .getBoolean(true);
         IMMIXER_3D_BOTTLES = config.get(
             "client",
             "immixer_3d_bottles",

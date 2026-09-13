@@ -37,6 +37,7 @@ public class XARMisc {
             super.displayAllReleventItems(items);
             // The registered vanilla egg normally appears only in the miscellaneous tab.
             items.add(new ItemStack(Items.spawn_egg, 1, ConfigHandler.BLIGHTER_ENTITY_ID));
+            items.add(new ItemStack(Items.spawn_egg, 1, ConfigHandler.ABERRANT_SLIME_ENTITY_ID));
         }
     };
 

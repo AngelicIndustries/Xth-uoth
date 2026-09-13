@@ -53,4 +53,5 @@ dependencies {
     compileOnly("com.falsepattern:endlessids-mc1.7.10:1.7.4:dev") { transitive = false }
 
     // Test
+    testImplementation("junit:junit:4.13.2")
 }

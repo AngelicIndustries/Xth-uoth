@@ -6,6 +6,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
+import com.aurilux.xar.entity.monster.EntityAberrantSlime;
 import com.aurilux.xar.entity.monster.EntityBlighter;
 import com.aurilux.xar.init.XARBlocks;
 
@@ -31,6 +32,7 @@ public class BiomeGenAberrant extends BiomeGenBase {
 
         // add native entities
         EntityRegistry.addSpawn(EntityBlighter.class, 5, 1, 2, EnumCreatureType.monster, this);
+        EntityRegistry.addSpawn(EntityAberrantSlime.class, 5, 1, 2, EnumCreatureType.monster, this);
     }
 
     @Override

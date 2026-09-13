@@ -38,6 +38,10 @@ public class XARAspects {
 
         // ENTITIES
         registerEntityAspects(
+            "AberrantSlime",
+            new AspectList().add(Aspect.SLIME, 2)
+                .add(Aspect.ELDRITCH, 4));
+        registerEntityAspects(
             "Blighter",
             new AspectList().add(Aspect.ELDRITCH, 2)
                 .add(Aspect.TAINT, 2)

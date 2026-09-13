@@ -1,4 +1,7 @@
 # Configuration
+aberrant_slime_shaders=Aberrant Slime shader effects
+aberrant_slime_shaders.tooltip=Animate Aberrant Slimes with distortion and grain effects. Disable to use only the slime texture. Client-side only; applies immediately.
+aberrant_slime_entity_id.desc=The entity ID for the Aberrant Slime. Must match on the server and clients. Requires a game restart.
 rift_mob_spawning=Rift mob spawning
 rift_mob_spawning.tooltip=Allow rifts to spawn mobs from the Aberrant biome's monster list. Does not affect portal travel, taint spreading, natural mob spawning, or existing mobs. Server-side setting; applies immediately.
 additional_aberrations=Additional aberrations
@@ -61,6 +64,7 @@ tile.fluidIchor.name=Ichor
 # Entities
 entity.Rift.name=Rift
 entity.Blighter.name=Blighter
+entity.AberrantSlime.name=Aberrant Slime
 
 # Tile Entities
 tile.immixer.name=Immixer

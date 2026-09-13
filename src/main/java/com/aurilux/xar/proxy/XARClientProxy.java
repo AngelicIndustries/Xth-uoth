@@ -5,12 +5,15 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.aurilux.xar.block.BlockImmixer;
+import com.aurilux.xar.client.AberrantSlimeShader;
 import com.aurilux.xar.client.RiftClientHandler;
 import com.aurilux.xar.client.renderer.block.RenderImmixer;
+import com.aurilux.xar.client.renderer.entity.RenderAberrantSlime;
 import com.aurilux.xar.client.renderer.entity.RenderBlighter;
 import com.aurilux.xar.client.renderer.entity.RenderRift;
 import com.aurilux.xar.entity.EntityRift;
 import com.aurilux.xar.entity.item.EntityRiftCatalyst;
+import com.aurilux.xar.entity.monster.EntityAberrantSlime;
 import com.aurilux.xar.entity.monster.EntityBlighter;
 import com.aurilux.xar.handler.EntityHandler;
 import com.aurilux.xar.handler.WorldHandler;
@@ -30,6 +33,9 @@ public class XARClientProxy extends XARServerProxy {
     }
 
     private void registerHandlers() {
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new AberrantSlimeShader.AnimationClock());
         RiftClientHandler riftHandler = new RiftClientHandler();
         FMLCommonHandler.instance()
             .bus()
@@ -56,5 +62,6 @@ public class XARClientProxy extends XARServerProxy {
         RenderingRegistry
             .registerEntityRenderingHandler(EntityRiftCatalyst.class, new RenderSnowball(XARItems.riftCatalyst, 0));
         RenderingRegistry.registerEntityRenderingHandler(EntityBlighter.class, new RenderBlighter());
+        RenderingRegistry.registerEntityRenderingHandler(EntityAberrantSlime.class, new RenderAberrantSlime());
     }
 }

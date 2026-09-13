@@ -25,6 +25,7 @@ tile.fluidIchor.name=浆液
 # Entities
 entity.Rift.name=裂痕
 entity.Blighter.name=瘟鬼
+entity.AberrantSlime.name=异变史莱姆
 
 # Potions
 potion.poisonImmunity.postfix=毒免药剂

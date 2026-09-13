@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLiving;
 import com.aurilux.xar.Xthuoth;
 import com.aurilux.xar.entity.EntityRift;
 import com.aurilux.xar.entity.item.EntityRiftCatalyst;
+import com.aurilux.xar.entity.monster.EntityAberrantSlime;
 import com.aurilux.xar.entity.monster.EntityBlighter;
 import com.aurilux.xar.handler.ConfigHandler;
 
@@ -16,6 +17,15 @@ public class XAREntities {
     public static void init() {
         // mobs
         addMobEntity(EntityBlighter.class, "Blighter", ConfigHandler.BLIGHTER_ENTITY_ID, 64, 3, true, 0x7043D9, 0);
+        addMobEntity(
+            EntityAberrantSlime.class,
+            "AberrantSlime",
+            ConfigHandler.ABERRANT_SLIME_ENTITY_ID,
+            64,
+            3,
+            true,
+            0x161020,
+            0x9876BA);
 
         // other entities
         addEntity(EntityRift.class, "Rift", ConfigHandler.RIFT_ENTITY_ID, 160, 3, false);

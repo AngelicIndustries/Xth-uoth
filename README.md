@@ -32,6 +32,8 @@ VERSION=myversion ./gradlew build
 
 Aurilux: original mod. Glowstone Ghost: artwork. Azanor: Thaumcraft. Build based on [GT:NH Example Mod](https://github.com/GTNewHorizons/ExampleMod1.7.10).
 
+The Aberrant Slime is adapted from [RidiculousWorld](https://github.com/SpitefulFox/RidiculousWorld)'s Shoggoth by SpitefulFox and contributors (WTFPL). Its source attribution and license are included under `META-INF/licenses` in the mod jar.
+
 ## License
 
 The code retains the original mod's [LGPLv3 license](LICENSE).
