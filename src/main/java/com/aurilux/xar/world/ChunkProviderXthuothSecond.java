@@ -17,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 
 import com.aurilux.xar.init.XARBlocks;
+import com.aurilux.xar.util.ChunkBiomeUtils;
 
 public class ChunkProviderXthuothSecond implements IChunkProvider {
 
@@ -58,10 +59,7 @@ public class ChunkProviderXthuothSecond implements IChunkProvider {
         generateTerrain(chunkX, chunkZ, blocks);
 
         Chunk chunk = new Chunk(this.worldObj, blocks, meta, chunkX, chunkZ);
-        byte[] abyte = chunk.getBiomeArray();
-        for (int k = 0; k < abyte.length; k++) {
-            abyte[k] = ((byte) this.biomesForGeneration[k].biomeID);
-        }
+        ChunkBiomeUtils.setBiomes(chunk, this.biomesForGeneration);
         chunk.generateSkylightMap();
         return chunk;
     }

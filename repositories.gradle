@@ -2,6 +2,13 @@
 
 repositories {
     maven {
+        name = "FalsePattern Releases"
+        url "https://mvn.falsepattern.com/releases"
+        content {
+            includeModule("com.falsepattern", "endlessids-mc1.7.10")
+        }
+    }
+    maven {
         name = "Fent Maven"
         url "https://maven.fentanylsolutions.org/releases"
     }

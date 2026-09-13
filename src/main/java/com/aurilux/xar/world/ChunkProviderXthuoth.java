@@ -25,6 +25,7 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import com.aurilux.xar.init.XARBlocks;
+import com.aurilux.xar.util.ChunkBiomeUtils;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
@@ -122,10 +123,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
         Chunk chunk = new Chunk(world, terrainBlocks, xCoord, zCoord);
         BiomeGenBase[] biomeGen = world.getWorldChunkManager()
             .loadBlockGeneratorData((BiomeGenBase[]) null, xCoord * 16, zCoord * 16, 16, 16);
-        byte[] biomeArray = chunk.getBiomeArray();
-        for (int i = 0; i < biomeArray.length; i++) {
-            biomeArray[i] = (byte) biomeGen[i].biomeID;
-        }
+        ChunkBiomeUtils.setBiomes(chunk, biomeGen);
         chunk.resetRelightChecks();
         return chunk;
     }

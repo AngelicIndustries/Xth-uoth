@@ -1,7 +1,5 @@
 package com.aurilux.xar.client;
 
-import java.util.Arrays;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
@@ -9,6 +7,7 @@ import net.minecraft.world.chunk.EmptyChunk;
 import net.minecraftforge.event.world.WorldEvent;
 
 import com.aurilux.xar.handler.ConfigHandler;
+import com.aurilux.xar.util.ChunkBiomeUtils;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -26,7 +25,7 @@ public class RiftClientHandler {
             // Before chunk packets arrive, sky rendering reads this shared placeholder. Unknown biomes (255)
             // invoke client world generation and race the integrated server's shared IntCache. Real chunks
             // receive their own biome arrays from the server; the placeholder must never generate biomes.
-            Arrays.fill(placeholder.getBiomeArray(), (byte) BiomeGenBase.plains.biomeID);
+            ChunkBiomeUtils.fill(placeholder, BiomeGenBase.plains);
         }
     }
 

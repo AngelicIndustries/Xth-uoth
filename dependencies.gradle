@@ -50,6 +50,7 @@ dependencies {
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.22-GTNH:dev")
 
     // Pure compile
+    compileOnly("com.falsepattern:endlessids-mc1.7.10:1.7.4:dev") { transitive = false }
 
     // Test
 }
