@@ -30,8 +30,6 @@ entity.AberrantSlime.name=异变史莱姆
 # Potions
 potion.poisonImmunity.postfix=毒免药剂
 potion.poisonImmunity=毒免
-potion.lifesight.postfix=灵视药剂
-potion.lifesight=灵视
 
 # Misc
 enchantment.damage.aberration=璀璨

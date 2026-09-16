@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemSeeds;
 
 import com.aurilux.xar.init.XARBlocks;
-import com.aurilux.xar.init.XARPotions;
 import com.aurilux.xar.util.ResourceUtils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -14,7 +13,6 @@ public class ItemThanabloomHeart extends ItemSeeds {
 
     public ItemThanabloomHeart() {
         super(XARBlocks.thanabloom, XARBlocks.aberrack);
-        this.setPotionEffect(XARPotions.thanabloomEffect);
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.minecraftforge.common.config.Property;
 
 import com.aurilux.xar.XARModInfo;
 import com.aurilux.xar.Xthuoth;
+import com.aurilux.xar.init.XARPotions;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -26,7 +27,6 @@ public class ConfigHandler {
     public static int CATALYST_ENTITY_ID;
     public static int DIM_ID;
     public static int ABERRANT_BIOME_ID;
-    public static int LIFESIGHT_POTION_ID;
     public static int POISON_IMMUNITY_POTION_ID;
     public static boolean GENERATE_PRYSMAL_ORE = true;
     public static int PRYSMAL_ORE_HARVEST_LEVEL = 2;
@@ -79,7 +79,10 @@ public class ConfigHandler {
             .getBoolean(true);
 
         // POTIONS
-        LIFESIGHT_POTION_ID = loadPotionId("lifesight_potion_id", "Lifesight");
+        if (config.hasKey("potions", "lifesight_potion_id")) {
+            config.getCategory("potions")
+                .remove("lifesight_potion_id");
+        }
         POISON_IMMUNITY_POTION_ID = loadPotionId("poison_immunity_potion_id", "Poison Immunity");
 
         // MISC
@@ -147,23 +150,23 @@ public class ConfigHandler {
 
     //// HELPERS
     private static int loadPotionId(String identifier, String name) {
+        int maxId = XARPotions.getMaxPotionId();
         return config.get(
             "potions",
             identifier,
             -1,
-            name + " effect ID. Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Requires a game restart.",
+            name + " effect ID. Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to "
+                + maxId
+                + ". IDs above 127 require the EndlessIDs potion module. Must match on the server and clients. Requires a game restart.",
             -1,
-            127)
+            maxId)
             .setLanguageKey(identifier)
             .setRequiresMcRestart(true)
             .getInt(-1);
     }
 
-    public static void savePotionIds(int lifesightId, int poisonImmunityId) {
-        LIFESIGHT_POTION_ID = lifesightId;
+    public static void savePoisonImmunityId(int poisonImmunityId) {
         POISON_IMMUNITY_POTION_ID = poisonImmunityId;
-        config.get("potions", "lifesight_potion_id", -1)
-            .set(lifesightId);
         config.get("potions", "poison_immunity_potion_id", -1)
             .set(poisonImmunityId);
         if (config.hasChanged()) config.save();

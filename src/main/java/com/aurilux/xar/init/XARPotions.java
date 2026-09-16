@@ -7,9 +7,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 
 import com.aurilux.xar.handler.ConfigHandler;
-import com.aurilux.xar.potion.PotionLifesight;
 import com.aurilux.xar.potion.PotionPoisonImmunity;
 import com.aurilux.xar.util.ReflectionUtils;
+import com.falsepattern.endlessids.constants.ExtendedConstants;
+
+import cpw.mods.fml.common.Loader;
 
 public class XARPotions {
 
@@ -52,25 +54,17 @@ public class XARPotions {
      */
 
     public static final String wightbulbPodEffect = "+0+1-2+3&4-4+13";
-    public static final String thanabloomEffect = "+0+1+2+3&4-4+13";
 
-    public static Potion lifesight;
     public static Potion poisonImmunity;
 
     @SuppressWarnings("unchecked")
     public static void init() {
-        int lifesightId = ConfigHandler.LIFESIGHT_POTION_ID;
-        int poisonImmunityId = ConfigHandler.POISON_IMMUNITY_POTION_ID;
-        validatePotionId(lifesightId, "lifesight_potion_id");
-        validatePotionId(poisonImmunityId, "poison_immunity_potion_id");
-        if (lifesightId != -1 && lifesightId == poisonImmunityId) {
-            throw new IllegalArgumentException(
-                "Lifesight and Poison Immunity must have different potion IDs in Xthuoth.cfg.");
-        }
-        lifesightId = resolvePotionId(lifesightId, poisonImmunityId);
-        poisonImmunityId = resolvePotionId(poisonImmunityId, lifesightId);
+        int poisonImmunityId = resolvePotionId(
+            ConfigHandler.POISON_IMMUNITY_POTION_ID,
+            Potion.potionTypes,
+            getMaxPotionId());
 
-        int requiredSize = Math.max(lifesightId, poisonImmunityId) + 1;
+        int requiredSize = poisonImmunityId + 1;
         if (Potion.potionTypes.length < requiredSize) {
             Potion[] potionTypes = Arrays.copyOf(Potion.potionTypes, requiredSize);
             ReflectionUtils.setProtectedValue(Potion.class, null, potionTypes, "potionTypes", "field_76425_a");
@@ -82,47 +76,48 @@ public class XARPotions {
         // Initialize our potions
         // NOTE: If you don't have an item that is set as a potion's ingredient (with the 'setPotionEffect' method),
         // your potion will not show up in the potion list
-        lifesight = new PotionLifesight(lifesightId, false, 16767262).setPotionName("potion.lifesight");
         poisonImmunity = new PotionPoisonImmunity(poisonImmunityId, false, 1280).setPotionName("potion.poisonImmunity");
 
         // Add our potion requirements: the bit combo that Minecraft will recognize as our potion
         HashMap myPotionRequirements = ReflectionUtils
             .getProtectedValue(PotionHelper.class, "potionRequirements", "field_77927_l");
-        myPotionRequirements.put(lifesight.getId(), "0 & 1 & 2 & 3");
         myPotionRequirements.put(poisonImmunity.getId(), "0 & 1 & !2 & 3");
-        ConfigHandler.savePotionIds(lifesightId, poisonImmunityId);
+        ConfigHandler.savePoisonImmunityId(poisonImmunityId);
     }
 
-    private static void validatePotionId(int id, String setting) {
-        if (id == -1) return;
-        // Vanilla saves and synchronizes potion IDs as signed bytes.
-        if (id < 1 || id > 127) {
+    public static int getMaxPotionId() {
+        // Check the potion module, not merely the base mod or the array size: serialization must support the ID.
+        return Loader.isModLoaded("endlessids_potion") ? ExtendedConstants.maximumPotionIDs - 1 : Byte.MAX_VALUE;
+    }
+
+    static int resolvePotionId(int configured, Potion[] registry, int maxId) {
+        if (configured != -1) {
+            if (configured < 1 || configured > maxId) {
+                throw new IllegalArgumentException(
+                    "Invalid potions.poison_immunity_potion_id=" + configured
+                        + " in Xthuoth.cfg. Use -1 for automatic allocation or an unused ID from 1 to "
+                        + maxId
+                        + ". IDs above 127 require the EndlessIDs potion module on both server and clients.");
+            }
+            if (isAvailable(registry, configured)) return configured;
             throw new IllegalArgumentException(
-                "Invalid potions." + setting
-                    + "="
-                    + id
-                    + " in Xthuoth.cfg. Use -1 for automatic allocation or an unused ID from 1 to 127.");
-        }
-        if (id < Potion.potionTypes.length && Potion.potionTypes[id] != null) {
-            throw new IllegalArgumentException(
-                "Potion ID " + id
+                "Potion ID " + configured
                     + " is already used by "
-                    + Potion.potionTypes[id].getName()
-                    + ". Choose an unused potions."
-                    + setting
-                    + " in Xthuoth.cfg.");
+                    + registry[configured].getName()
+                    + ". Choose an unused potions.poison_immunity_potion_id in Xthuoth.cfg.");
         }
+
+        // Prefer slots outside the vanilla potions, then check any remaining gaps below them.
+        for (int id = 32; id <= maxId; id++) {
+            if (isAvailable(registry, id)) return id;
+        }
+        for (int id = 1; id < 32 && id <= maxId; id++) {
+            if (isAvailable(registry, id)) return id;
+        }
+        throw new IllegalStateException("No unused potion IDs from 1 to " + maxId + " remain for Xth'uoth.");
     }
 
-    private static int resolvePotionId(int configured, int reserved) {
-        if (configured != -1) return configured;
-        // Prefer the original mod's usual 32/33 slots, but never append beyond vanilla's saved ID range.
-        for (int id = 32; id <= 127; id++) {
-            if (id != reserved && (id >= Potion.potionTypes.length || Potion.potionTypes[id] == null)) return id;
-        }
-        for (int id = 1; id < 32; id++) {
-            if (id != reserved && Potion.potionTypes[id] == null) return id;
-        }
-        throw new IllegalStateException("No unused potion IDs from 1 to 127 remain for Xth'uoth.");
+    private static boolean isAvailable(Potion[] registry, int id) {
+        return id >= registry.length || registry[id] == null;
     }
 }

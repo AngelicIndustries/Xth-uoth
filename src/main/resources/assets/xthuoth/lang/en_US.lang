@@ -8,10 +8,8 @@ additional_aberrations=Additional aberrations
 additional_aberrations.tooltip=Entity IDs that take Radiant's bonus damage, e.g. Zombie or Thaumcraft.Wisp. IDs are case-sensitive; use one per entry. Blighters always qualify. Applies immediately; use the same list on the server and clients.
 prysmal_ore_harvest_level=Prysmal ore harvest level
 prysmal_ore_harvest_level.tooltip=Required pickaxe level: 0 = wood/gold, 1 = stone, 2 = iron, 3 = diamond. Higher levels may be provided by other mods. Use the same setting on the server and clients. Requires a game restart.
-lifesight_potion_id=Lifesight effect ID
-lifesight_potion_id.tooltip=Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Changing IDs requires a game restart.
 poison_immunity_potion_id=Poison Immunity effect ID
-poison_immunity_potion_id.tooltip=Use -1 to choose and save an unused ID automatically, or an unused ID from 1 to 127. Must match on the server and clients. Changing IDs requires a game restart.
+poison_immunity_potion_id.tooltip=Use -1 to choose and save an unused ID automatically. Available IDs: 1-127 normally, or 1-65535 with the EndlessIDs potion module enabled. Must match on the server and clients. Changing IDs requires a game restart.
 immixer_3d_bottles=3D Immixer bottles and holders
 immixer_3d_bottles.tooltip=Use 3D bottles, holders and upper bars instead of flat sprites like a vanilla brewing stand. Client-side only; applies immediately.
 generate_prysmal_ore=Generate Prysmal ore
@@ -72,8 +70,6 @@ tile.immixer.name=Immixer
 # Potions
 potion.poisonImmunity.postfix=Potion of Poison Immunity
 potion.poisonImmunity=Poison Immunity
-potion.lifesight.postfix=Potion of Lifesight
-potion.lifesight=Lifesight
 
 # Container
 container.immixer=Immixer

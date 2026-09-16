@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -101,11 +100,5 @@ public class EntityHandler {
                 ThaumcraftApiHelper.addStickyWarpToPlayer(player, 1);
             }
         }
-    }
-
-    @SubscribeEvent
-    public void onOverlayRender(RenderGameOverlayEvent e) {
-        // POTION EFFECT
-        // For lifesight potion?
     }
 }
