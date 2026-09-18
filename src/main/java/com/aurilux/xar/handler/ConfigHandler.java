@@ -23,8 +23,6 @@ public class ConfigHandler {
     public static int RADIANT_ENCH_ID;
     public static int BLIGHTER_ENTITY_ID;
     public static int ABERRANT_SLIME_ENTITY_ID;
-    public static int RIFT_ENTITY_ID;
-    public static int CATALYST_ENTITY_ID;
     public static int DIM_ID;
     public static int ABERRANT_BIOME_ID;
     public static int POISON_IMMUNITY_POTION_ID;
@@ -49,8 +47,11 @@ public class ConfigHandler {
         // ENTITY
         String category = "entities";
         BLIGHTER_ENTITY_ID = loadIntProp(category, "blighter_entity_id", 101);
-        RIFT_ENTITY_ID = loadIntProp(category, "rift_entity_id", 102);
-        CATALYST_ENTITY_ID = loadIntProp(category, "catalyst_entity_id", 103);
+        // These entities only need fixed mod-local network IDs, not configurable global IDs.
+        config.getCategory(category)
+            .remove("rift_entity_id");
+        config.getCategory(category)
+            .remove("catalyst_entity_id");
         ABERRANT_SLIME_ENTITY_ID = loadIntProp(category, "aberrant_slime_entity_id", 104);
         Set<String> aberrations = new HashSet<>();
         for (String id : config.get(

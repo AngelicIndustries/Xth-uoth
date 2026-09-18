@@ -14,12 +14,29 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class XAREntities {
 
+    // Network IDs are local to this mod and must be identical on both sides. Keep them stable and
+    // separate from configurable global spawn-egg IDs, which can overlap these values safely.
+    private static final int BLIGHTER_ID = 101;
+    private static final int RIFT_ID = 102;
+    private static final int CATALYST_ID = 103;
+    private static final int ABERRANT_SLIME_ID = 104;
+
     public static void init() {
         // mobs
-        addMobEntity(EntityBlighter.class, "Blighter", ConfigHandler.BLIGHTER_ENTITY_ID, 64, 3, true, 0x7043D9, 0);
+        addMobEntity(
+            EntityBlighter.class,
+            "Blighter",
+            BLIGHTER_ID,
+            ConfigHandler.BLIGHTER_ENTITY_ID,
+            64,
+            3,
+            true,
+            0x7043D9,
+            0);
         addMobEntity(
             EntityAberrantSlime.class,
             "AberrantSlime",
+            ABERRANT_SLIME_ID,
             ConfigHandler.ABERRANT_SLIME_ENTITY_ID,
             64,
             3,
@@ -28,8 +45,8 @@ public class XAREntities {
             0x9876BA);
 
         // other entities
-        addEntity(EntityRift.class, "Rift", ConfigHandler.RIFT_ENTITY_ID, 160, 3, false);
-        addEntity(EntityRiftCatalyst.class, "Rift Catalyst", ConfigHandler.CATALYST_ENTITY_ID, 64, 10, true);
+        addEntity(EntityRift.class, "Rift", RIFT_ID, 160, 3, false);
+        addEntity(EntityRiftCatalyst.class, "Rift Catalyst", CATALYST_ID, 64, 10, true);
     }
 
     //// HELPERS
@@ -45,11 +62,10 @@ public class XAREntities {
             sendsVelocityUpdates);
     }
 
-    @SuppressWarnings("unchecked")
-    private static void addMobEntity(Class<? extends EntityLiving> cl, String name, int entityId, int trackingRange,
-        int updateFrequency, boolean sendsVelocityUpdates, int primaryColor, int secondaryColor) {
+    private static void addMobEntity(Class<? extends EntityLiving> cl, String name, int entityId, int globalEntityId,
+        int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int primaryColor, int secondaryColor) {
         // registering the mob egg
-        EntityRegistry.registerGlobalEntityID(cl, name, entityId, primaryColor, secondaryColor);
+        EntityRegistry.registerGlobalEntityID(cl, name, globalEntityId, primaryColor, secondaryColor);
 
         addEntity(cl, name, entityId, trackingRange, updateFrequency, sendsVelocityUpdates);
     }

@@ -1,7 +1,7 @@
 # Configuration
 aberrant_slime_shaders=Aberrant Slime shader effects
 aberrant_slime_shaders.tooltip=Animate Aberrant Slimes with distortion and grain effects. Disable to use only the slime texture. Client-side only; applies immediately.
-aberrant_slime_entity_id.desc=The entity ID for the Aberrant Slime. Must match on the server and clients. Requires a game restart.
+aberrant_slime_entity_id.desc=The global spawn-egg ID for the Aberrant Slime. Must be unused by other mobs and match on the server and clients. Requires a game restart.
 rift_mob_spawning=Rift mob spawning
 rift_mob_spawning.tooltip=Allow rifts to spawn mobs from the Aberrant biome's monster list. Does not affect portal travel, taint spreading, natural mob spawning, or existing mobs. Server-side setting; applies immediately.
 additional_aberrations=Additional aberrations
@@ -16,9 +16,7 @@ generate_prysmal_ore=Generate Prysmal ore
 generate_prysmal_ore.tooltip=Generate Prysmal ore in new Overworld chunks. Existing ore is not removed. Uses the server's setting in multiplayer.
 rift_taint_spread=Rift taint spreading
 rift_taint_spread.tooltip=Allow rifts to spread tainted biomes and fibrous taint in the Overworld. Does not remove existing taint or affect other Thaumcraft spreading sources. Uses the server's setting in multiplayer; applies immediately.
-blighter_entity_id.desc=The entity ID for the Blighter
-rift_entity_id.desc=The entity ID for the Rift
-catalyst_entity_id.desc=The entity ID for the Rift Catalyst
+blighter_entity_id.desc=The global spawn-egg ID for the Blighter. Must be unused by other mobs and match on the server and clients. Requires a game restart.
 aberrant_biome_id.desc=The biome ID for the biome exclusive to Xth'uoth
 xthuoth_dim_id.desc=The dimension ID for Xth'uoth
 radiant_enchant_id.desc=The radiant enchantment ID
