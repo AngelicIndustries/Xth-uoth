@@ -3,6 +3,7 @@ package com.aurilux.xar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.aurilux.xar.fluid.IchorContactEffects;
 import com.aurilux.xar.handler.ConfigHandler;
 import com.aurilux.xar.init.XARAchievements;
 import com.aurilux.xar.init.XARAspects;
@@ -24,6 +25,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -85,5 +87,11 @@ public class Xthuoth {
         XARAspects.init();
         XARRecipes.init();
         XARResearch.init();
+    }
+
+    @EventHandler
+    public void loadComplete(FMLLoadCompleteEvent e) {
+        // Check the ichor effect list once every mod has registered its potions, so mistakes are logged at startup.
+        IchorContactEffects.getEffects();
     }
 }

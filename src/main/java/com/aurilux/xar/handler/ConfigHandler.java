@@ -31,6 +31,7 @@ public class ConfigHandler {
     public static volatile Set<String> ADDITIONAL_ABERRATIONS = Collections.emptySet();
     public static volatile boolean RIFT_TAINT_SPREAD = true;
     public static volatile boolean RIFT_MOB_SPAWNING = true;
+    public static volatile String[] ICHOR_CONTACT_EFFECTS = new String[0];
     public static boolean IMMIXER_3D_BOTTLES = false;
     public static boolean ABERRANT_SLIME_SHADERS = true;
 
@@ -115,6 +116,14 @@ public class ConfigHandler {
             "Allow rifts to spawn mobs from the Aberrant biome's monster list. Does not affect portal travel, taint spreading, natural mob spawning, or existing mobs. Uses the server's setting in multiplayer; applies immediately.")
             .setLanguageKey("rift_mob_spawning")
             .getBoolean(true);
+        ICHOR_CONTACT_EFFECTS = config.get(
+            category,
+            "ichor_contact_effects",
+            new String[0],
+            "Potion effects given to creatures touching ichor, one per line as: effect, level, seconds. The effect is a potion name such as potion.moveSlowdown (or just moveSlowdown), or a numeric effect ID. Level 1 is the weakest. E.g. \"potion.moveSlowdown, 2, 5\" gives Slowness II for 5 seconds, reapplied whenever it wears off while the creature stays in ichor. Instant effects such as potion.heal and potion.harm are applied on contact and repeat every given number of seconds instead. Invalid entries are skipped and logged. Uses the server's setting in multiplayer; applies immediately.")
+            .setLanguageKey("ichor_contact_effects")
+            .getStringList()
+            .clone();
 
         // CLIENT
         ABERRANT_SLIME_SHADERS = config.get(

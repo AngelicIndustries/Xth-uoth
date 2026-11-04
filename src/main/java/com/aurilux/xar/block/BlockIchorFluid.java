@@ -2,10 +2,14 @@ package com.aurilux.xar.block;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.FluidRegistry;
 
+import com.aurilux.xar.fluid.IchorContactEffects;
 import com.aurilux.xar.init.XARFluids;
 import com.aurilux.xar.util.ResourceUtils;
 
@@ -28,6 +32,13 @@ public class BlockIchorFluid extends BlockFluidClassic {
         super(FluidRegistry.getFluid(XARFluids.ichor.getName()), Material.water);
         XARFluids.ichor.setBlock(this);
         XARFluids.ichor.setIcons(ichorStill, ichorFlowing);
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+        if (!world.isRemote && entity instanceof EntityLivingBase) {
+            IchorContactEffects.apply((EntityLivingBase) entity);
+        }
     }
 
     @Override

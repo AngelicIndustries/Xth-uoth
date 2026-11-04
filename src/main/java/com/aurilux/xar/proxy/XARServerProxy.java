@@ -1,6 +1,7 @@
 package com.aurilux.xar.proxy;
 
 import com.aurilux.xar.Xthuoth;
+import com.aurilux.xar.fluid.IchorContactEffects;
 import com.aurilux.xar.handler.GuiHandler;
 import com.aurilux.xar.handler.RiftTravelHandler;
 import com.aurilux.xar.tileentity.TileEntityImmixer;
@@ -15,6 +16,9 @@ public class XARServerProxy {
         FMLCommonHandler.instance()
             .bus()
             .register(new RiftTravelHandler());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new IchorContactEffects.ErrorReporter());
         GameRegistry.registerTileEntity(TileEntityImmixer.class, "immixer");
         NetworkRegistry.INSTANCE.registerGuiHandler(Xthuoth.instance, new GuiHandler());
     }
