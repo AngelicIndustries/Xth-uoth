@@ -36,7 +36,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
     guiFactory = XARModInfo.GUI_FACTORY,
     dependencies = XARModInfo.MOD_DEPEND,
     customProperties = { @Mod.CustomProperty(k = "license", v = "LGPLv3"),
-        @Mod.CustomProperty(k = "issueTrackerUrl", v = "https://github.com/JackOfNoneTrades/Xth-uoth/issues"),
+        @Mod.CustomProperty(k = "issueTrackerUrl", v = "https://github.com/AngelicIndustries/Xth-uoth/issues"),
         @Mod.CustomProperty(k = "iconFile", v = "assets/xthuoth/icon.png"),
         @Mod.CustomProperty(k = "backgroundFile", v = "assets/xthuoth/background.png") })
 public class Xthuoth {

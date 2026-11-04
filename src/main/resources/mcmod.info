@@ -5,7 +5,7 @@
     "description": "A revival of Aurilux's Thaumcraft addon for Minecraft 1.7.10, with a Lovecraftian dimension, new research, and potion mixing.",
     "version": "${modVersion}",
     "mcversion": "${minecraftVersion}",
-    "url": "https://github.com/JackOfNoneTrades/Xth-uoth",
+    "url": "https://github.com/AngelicIndustries/Xth-uoth",
     "updateUrl": "",
     "authorList": [
       "Aurilux"

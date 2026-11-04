@@ -7,9 +7,9 @@ A revival of [Aurilux's Xth'uoth](https://github.com/Aurilux/Xth-uoth), a Thaumc
 > [!WARNING]
 > The mod was left in a very WIP state. Its custom dimension is quite barren.
 
-[![GitHub](images/badges/github.png)](https://github.com/JackOfNoneTrades/Xth-uoth/releases)
-[![67minecraft](images/badges/67.png)](https://67.fentanylsolutions.org/mod/xth-uoth)
-[![Maven](images/badges/maven.png)](https://maven.fentanylsolutions.org/#/releases/com/aurilux/xar/Xth-uoth)
+[![GitHub](images/badges/github.png)](https://github.com/AngelicIndustries/Xth-uoth/releases)
+[![67minecraft](images/badges/67.png)](https://67minecraft.com/mod/xth-uoth)
+[![Maven](images/badges/maven.png)](https://maven.angelic.industries/#/releases/com/aurilux/xar/Xth-uoth)
 ![Forge](images/badges/forge.png)
 [![Discord](images/badges/cord.png)](https://discord.gg/xAWCqGrguG)
 
